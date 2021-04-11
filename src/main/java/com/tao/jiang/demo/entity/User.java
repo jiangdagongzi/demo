@@ -1,8 +1,12 @@
 package com.tao.jiang.demo.entity;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 public class User {
+    @Id
     private Long id;
 
     private String userName;
@@ -62,4 +66,55 @@ public class User {
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", auth=" + auth +
+                ", password='" + password + '\'' +
+                ", createTime=" + createTime +
+                ", lastLogin=" + lastLogin +
+                '}';
+    }
+
+    public enum Role {
+        NORMAL(
+                Privilege.LOGIN,
+                Privilege.LOGOUT),
+
+        ADMIN(
+                NORMAL,
+                Privilege.MODIFY_INFO
+                );
+
+        Role(Privilege... privileges) {
+            this.privileges = privileges;
+        }
+
+
+        public Privilege[] getPrivileges() {
+            return privileges;
+        }
+
+        private Privilege[] privileges;
+
+        Role(Role role, Privilege... privileges) {
+            this.privileges = new Privilege[role.getPrivileges().length + privileges.length];
+            System.arraycopy(role.getPrivileges(),0,this.privileges, 0, role.getPrivileges().length);
+            System.arraycopy(privileges, 0, this.privileges, role.getPrivileges().length,  privileges.length);
+        }
+        public boolean hasPrivilege(Privilege privilege){
+            return !(privilege == null || ArrayUtils.isEmpty(this.privileges))&& ArrayUtils.contains(this.privileges, privilege);
+        }
+    }
+
+    public enum Privilege {
+        LOGIN,
+        LOGOUT,
+        MODIFY_INFO
+    }
+
 }
