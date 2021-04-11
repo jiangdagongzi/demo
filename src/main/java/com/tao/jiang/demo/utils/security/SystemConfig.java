@@ -10,11 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Autowired
-    private ParamInterceptor jwtInterceptor;
+    private ParamInterceptor paramInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor). addPathPatterns("/**").
+        registry.addInterceptor(paramInterceptor). addPathPatterns("/**").
                 excludePathPatterns("/login","/register/**","/hello"); //设置不拦截的请求地址
     }
 }

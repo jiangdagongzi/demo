@@ -36,7 +36,6 @@ public class ParamInterceptor implements HandlerInterceptor {
                 String error = "token信息有误";
                 writer.print(error);
                 return false;
-
             } catch (IOException e) {
                 log.error("response error", e);
             } finally {

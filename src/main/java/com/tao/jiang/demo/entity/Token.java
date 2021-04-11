@@ -13,4 +13,10 @@ public class Token {
 
     private String ownerName;
 
+    private String createTime;
+
+//    public static Token createOneToken(){
+//
+//    }
+
 }
