@@ -1,6 +1,9 @@
 package com.tao.jiang.demo.utils.security;
 
+import com.tao.jiang.demo.entity.Token;
 import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.utils.ConfigurationManager;
+import com.tao.jiang.demo.utils.general.TimeUtils;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 @Component
 public class ParamInterceptor implements HandlerInterceptor {
@@ -22,18 +26,19 @@ public class ParamInterceptor implements HandlerInterceptor {
     private Log log = LogFactory.getFactory().getInstance(ParamInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
-        String token = httpServletRequest.getHeader("token");
-        //LOG.info(token)
-
-        if (tokenRepository.findByToken(token) == null) {
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
+        //TODO enhance logic
+        String tokenString = httpServletRequest.getHeader("token");
+        String userName = httpServletRequest.getParameter("userName");
+        Token token = tokenRepository.findByToken(tokenString);
+        // token not exist
+        if (token == null) {
             PrintWriter writer = null;
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("text/html; charset=utf-8");
             try {
                 writer = httpServletResponse.getWriter();
-                String error = "token信息有误";
+                String error = "Token not exist!";
                 writer.print(error);
                 return false;
             } catch (IOException e) {
@@ -41,9 +46,22 @@ public class ParamInterceptor implements HandlerInterceptor {
             } finally {
                 if (writer != null)
                     writer.close();
+                return false;
             }
         }
-        return true;
+        // token exist
+        else {
+            //check if token expire
+            if (TimeUtils.timeSlotLongerThan(token.getCreateTime(), new Date(), ConfigurationManager.getInstance().getTokenExpirationPeriod())) {
+
+                return false;
+            }
+            if (token.getOwnerName().equals(userName)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     @Override

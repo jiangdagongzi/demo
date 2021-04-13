@@ -1,10 +1,19 @@
 package com.tao.jiang.demo.controller;
 
 import com.tao.jiang.demo.entity.Token;
+import com.tao.jiang.demo.entity.User;
 import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.service.TokenService;
+import com.tao.jiang.demo.service.UserService;
+import com.tao.jiang.demo.utils.annotation.UserLoginToken;
+import com.tao.jiang.demo.utils.general.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,20 +22,76 @@ public class UserController {
     @Autowired
     private TokenRepository tokenRepository;
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String getUser(){
-//
-//    }
+    @Autowired
+    private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(){
-        return null;
-    }
+    @Autowired
+    private TokenService tokenService;
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(){
-        return null;
+    public HttpEntity<?> register(
+            @RequestParam(value = "userName", required = true) String userName,
+            @RequestParam(value = "password", required = true) String password
+    ) {
+        User user = userService.findByUsername(userName);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exist!");
+        } else {
+            if (!UserService.userNameValid(userName)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Username not valid!");
+            } else {
+                if (!UserService.passwordValid(password)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Password not valid!");
+                } else {
+                    User newUser = new User();
+                    newUser.setUserName(userName);
+                    newUser.setPassword(UserService.encryptPassword(password));
+                    userService.save(newUser);
+                    return ResponseEntity.status(HttpStatus.OK).body("User registered!");
+                }
+            }
+        }
+
+    }
+
+    //    @ApiOperation(value = "登陆", notes = "登陆")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public HttpEntity<?> login(
+            @RequestParam(value = "userName", required = true) String userName,
+            @RequestParam(value = "password", required = true) String password
+    ) {
+        User user = userService.findByUsername(userName);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist!");
+        }
+        if (!UserService.checkpassword(password, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong password!");
+        } else {
+            Token token = tokenService.getToken(user);
+            tokenService.save(token);
+            return ResponseEntity.status(HttpStatus.OK).body(token);
+        }
+    }
+
+
+
+    /***
+     * 这个请求需要验证token才能访问
+     *
+     * @authur: tao
+     * @return String 返回类型
+     */
+    @Deprecated
+    @UserLoginToken
+//    @ApiOperation(value = "获取信息", notes = "获取信息")
+    @RequestMapping(value = "/getMessage", method = RequestMethod.GET)
+    public String getMessage() {
+
+        // 取出token中带的用户id 进行操作
+        System.out.println(TokenUtils.getTokenUserId());
+
+        return "您已通过验证";
     }
 
 }

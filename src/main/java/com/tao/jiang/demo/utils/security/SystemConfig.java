@@ -14,7 +14,7 @@ public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(paramInterceptor). addPathPatterns("/**").
-                excludePathPatterns("/login","/register/**","/hello"); //设置不拦截的请求地址
+        registry.addInterceptor(paramInterceptor).addPathPatterns("/**").
+                excludePathPatterns("/login", "/register/**", "/hello"); //设置不拦截的请求地址
     }
 }

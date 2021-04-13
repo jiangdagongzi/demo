@@ -3,6 +3,8 @@ package com.tao.jiang.demo.entity;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
+
 public class Token {
     @Id
     private String id;
@@ -13,10 +15,45 @@ public class Token {
 
     private String ownerName;
 
-    private String createTime;
+    private Date createTime;
 
-//    public static Token createOneToken(){
-//
-//    }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

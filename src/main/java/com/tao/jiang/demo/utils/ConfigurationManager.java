@@ -16,7 +16,7 @@ import java.util.TimeZone;
 
 @Component
 public class ConfigurationManager {
-    private ConfigurationManager instance ;
+    private static ConfigurationManager instance;
     private Log log = LogFactory.getFactory().getInstance(ConfigurationManager.class);
 
     @Value("${spring.data.mongodb.database}")
@@ -31,6 +31,9 @@ public class ConfigurationManager {
     @Value("${spring.data.mongodb.port}")
     private int port;
 
+    @Value("{token.expiration.period}")
+    private int tokenExpirationPeriod;
+
 
     private MongoOperations fmwMongoDB;
     private MongoOperations fmwFileMongoDB;
@@ -40,11 +43,79 @@ public class ConfigurationManager {
         Locale.setDefault(Locale.ENGLISH);
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         this.fmwMongoDB = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(host, port), databaseName));
-        this.fmwFileMongoDB = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(host,port), fileDatabaseName));
+        this.fmwFileMongoDB = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(host, port), fileDatabaseName));
         instance = this;
     }
 
-    public ConfigurationManager getInstance() {
+    public static ConfigurationManager getInstance() {
         return instance;
+    }
+
+    public static void setInstance(ConfigurationManager instance) {
+        ConfigurationManager.instance = instance;
+    }
+
+    public Log getLog() {
+        return log;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
+    }
+
+    public String getFileDatabaseName() {
+        return fileDatabaseName;
+    }
+
+    public void setFileDatabaseName(String fileDatabaseName) {
+        this.fileDatabaseName = fileDatabaseName;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public int getTokenExpirationPeriod() {
+        return tokenExpirationPeriod;
+    }
+
+    public void setTokenExpirationPeriod(int tokenExpirationPeriod) {
+        this.tokenExpirationPeriod = tokenExpirationPeriod;
+    }
+
+    public MongoOperations getFmwMongoDB() {
+        return fmwMongoDB;
+    }
+
+    public void setFmwMongoDB(MongoOperations fmwMongoDB) {
+        this.fmwMongoDB = fmwMongoDB;
+    }
+
+    public MongoOperations getFmwFileMongoDB() {
+        return fmwFileMongoDB;
+    }
+
+    public void setFmwFileMongoDB(MongoOperations fmwFileMongoDB) {
+        this.fmwFileMongoDB = fmwFileMongoDB;
     }
 }
