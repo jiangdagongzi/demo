@@ -1,10 +1,10 @@
 package com.tao.jiang.demo.utils.security;
 
 import com.tao.jiang.demo.repository.token.TokenRepository;
-import com.tao.jiang.demo.utils.ConfigurationManager;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
+@Component
 public class ParamInterceptor implements HandlerInterceptor {
 
     @Autowired

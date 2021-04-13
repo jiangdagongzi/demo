@@ -19,16 +19,16 @@ public class ConfigurationManager {
     private ConfigurationManager instance ;
     private Log log = LogFactory.getFactory().getInstance(ConfigurationManager.class);
 
-    @Value("spring.data.mongodb.database")
+    @Value("${spring.data.mongodb.database}")
     private String databaseName;
 
-    @Value("spring.data.mongodb.file.database")
+    @Value("${spring.data.mongodb.file.database}")
     private String fileDatabaseName;
 
-    @Value("spring.data.mongodb.host")
+    @Value("${spring.data.mongodb.host}")
     private String host;
 
-    @Value("spring.data.mongodb.port")
+    @Value("${spring.data.mongodb.port}")
     private int port;
 
 
