@@ -5,19 +5,17 @@ import com.tao.jiang.demo.entity.User;
 import com.tao.jiang.demo.repository.token.TokenRepository;
 import com.tao.jiang.demo.service.TokenService;
 import com.tao.jiang.demo.service.UserService;
-import com.tao.jiang.demo.utils.annotation.UserLoginToken;
-import com.tao.jiang.demo.utils.general.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("")
+@Controller
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private TokenRepository tokenRepository;
@@ -56,7 +54,7 @@ public class UserController {
     }
 
     //    @ApiOperation(value = "登陆", notes = "登陆")
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public HttpEntity<?> login(
             @RequestParam(value = "userName", required = true) String userName,
             @RequestParam(value = "password", required = true) String password
@@ -75,23 +73,16 @@ public class UserController {
     }
 
 
-
     /***
      * 这个请求需要验证token才能访问
      *
      * @authur: tao
      * @return String 返回类型
      */
-    @Deprecated
-    @UserLoginToken
-//    @ApiOperation(value = "获取信息", notes = "获取信息")
     @RequestMapping(value = "/getMessage", method = RequestMethod.GET)
-    public String getMessage() {
-
-        // 取出token中带的用户id 进行操作
-        System.out.println(TokenUtils.getTokenUserId());
-
-        return "您已通过验证";
+    public HttpEntity<?> getMessage(
+            @RequestParam(value = "userName", required = true) String userName) {
+        return ResponseEntity.status(HttpStatus.OK).body("Validation passed!");
     }
 
 }

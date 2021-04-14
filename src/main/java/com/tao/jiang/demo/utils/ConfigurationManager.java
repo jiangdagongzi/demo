@@ -31,7 +31,7 @@ public class ConfigurationManager {
     @Value("${spring.data.mongodb.port}")
     private int port;
 
-    @Value("{token.expiration.period}")
+    @Value("${token.expiration.period}")
     private int tokenExpirationPeriod;
 
 

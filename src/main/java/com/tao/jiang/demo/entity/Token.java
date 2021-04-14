@@ -1,6 +1,7 @@
 package com.tao.jiang.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ public class Token {
 
     private String token;
 
+    @JsonIgnore
     private String ownerId;
 
     private String ownerName;

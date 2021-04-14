@@ -10,11 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Autowired
-    private ParamInterceptor paramInterceptor;
+    private TokenInterceptor tokenInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(paramInterceptor).addPathPatterns("/**").
-                excludePathPatterns("/login", "/register/**", "/hello"); //设置不拦截的请求地址
+        registry.addInterceptor(tokenInterceptor).addPathPatterns("/*/*").
+                excludePathPatterns("/user/login", "/user/register", "/hello");
     }
 }

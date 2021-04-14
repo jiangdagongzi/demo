@@ -1,5 +1,6 @@
 package com.tao.jiang.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.annotation.Id;
 
@@ -7,16 +8,20 @@ import java.util.Date;
 
 public class User {
     @Id
+    @JsonIgnore
     private String id;
 
     private String userName;
 
+    @JsonIgnore
     private Integer auth;
 
+    @JsonIgnore
     private String password;
 
     private Date createTime;
 
+    @JsonIgnore
     private Date lastLogin;
 
     public String getId() {
