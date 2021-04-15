@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/${demo.stage.name}/demo")
 public class HelloController {
 
-    @RequestMapping(value = "/1", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello(){
       return "hello";
     }

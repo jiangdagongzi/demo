@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/${demo.stage.name}/user")
 public class UserController {
     @Autowired
     private TokenRepository tokenRepository;
