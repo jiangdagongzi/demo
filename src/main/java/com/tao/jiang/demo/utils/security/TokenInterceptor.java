@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.HandlerMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,8 +28,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
-//        if (!(handler instanceof HandlerMethod))
-//            return true;
         String tokenString = httpServletRequest.getHeader("token");
         String userName = httpServletRequest.getParameter("userName");
         Token token = tokenRepository.findByToken(tokenString);
