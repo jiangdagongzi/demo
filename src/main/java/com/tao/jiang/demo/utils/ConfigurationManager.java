@@ -1,8 +1,11 @@
 package com.tao.jiang.demo.utils;
 
 import com.mongodb.MongoClient;
+import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.repository.user.UserRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,6 +21,11 @@ import java.util.TimeZone;
 public class ConfigurationManager {
     private static ConfigurationManager instance;
     private Log log = LogFactory.getFactory().getInstance(ConfigurationManager.class);
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @Value("${spring.data.mongodb.database}")
     private String databaseName;
@@ -128,5 +136,13 @@ public class ConfigurationManager {
 
     public void setFmwFileMongoDB(MongoOperations fmwFileMongoDB) {
         this.fmwFileMongoDB = fmwFileMongoDB;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public TokenRepository getTokenRepository() {
+        return tokenRepository;
     }
 }
