@@ -18,16 +18,19 @@ public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenInterceptor).addPathPatterns("/*/*").
-                excludePathPatterns("/demo/user/login", "/demo/user/register", "/demo/hello", "/demo/login.html", "/demo/register.html");
+        registry.addInterceptor(tokenInterceptor).addPathPatterns("/*").
+                excludePathPatterns("/demo/user/login", "/demo/user/register", "/demo/hello", "/*.html","/css/*","/images/*", "/js/*","/img/*");
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("GET","POST", "PUT","DELETE").allowedOrigins("*").allowedHeaders("*");
+                registry.addMapping("/**")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedOrigins("*")
+                        .allowedHeaders("*");
             }
         };
     }
@@ -35,15 +38,8 @@ public class SystemConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String os = System.getProperty("os.name");
-
-        //如果是Windows系统
-        if (os.toLowerCase().startsWith("win")) {
-            registry.addResourceHandler("/demo/**")
-                    // /app_file/**表示在磁盘filePathWindow目录下的所有资源会被解析为以下的路径
-                    .addResourceLocations("file:" + staticDir);
-//
-        }
+        registry.addResourceHandler("/**")
+                .addResourceLocations("file:" + staticDir);
     }
 
 }

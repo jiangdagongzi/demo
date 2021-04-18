@@ -29,7 +29,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
         String tokenString = httpServletRequest.getHeader("token");
-        String userName = httpServletRequest.getParameter("userName");
+//        String tokenString = httpServletRequest.getCookies().
+//        String userName = httpServletRequest.getParameter("userName");
         Token token = tokenRepository.findByToken(tokenString);
 
 
@@ -55,13 +56,13 @@ public class TokenInterceptor implements HandlerInterceptor {
                 //check if token validate
                 if (TimeUtils.tokenValidate(token.getCreateTime(), new Date(), ConfigurationManager.getInstance().getTokenExpirationPeriod())) {
                     //check if token belongs to user
-                    if (token.getOwnerName().equals(userName)) {
+//                    if (token.getOwnerName().equals(userName)) {
                         return true;
-                    } else {
-                        writer = httpServletResponse.getWriter();
-                        writer.print("Token not belong to this user!");
-                        return false;
-                    }
+//                    } else {
+//                        writer = httpServletResponse.getWriter();
+//                        writer.print("Token not belong to this user!");
+//                        return false;
+//                    }
                 }
                 // not validate
                 else {

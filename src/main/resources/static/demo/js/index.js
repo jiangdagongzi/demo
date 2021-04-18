@@ -97,5 +97,14 @@ $(function() {
         });
     });
 
+	// // 获取token
+	// var token = localStorage.getItem('token')
+	// // 将token设置到请求头headers中
+	// $.ajaxSetup({
+	// 	headers: {
+	// 		'token': token
+	// 	}
+	// })
+
 });
 
