@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/${demo.stage.name}/user")
 public class UserController {
@@ -68,6 +70,8 @@ public class UserController {
         } else {
             Token token = tokenService.getToken(user);
             tokenService.save(token);
+            user.setLastLogin(token.getCreateTime());
+            userService.save(user);
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
     }

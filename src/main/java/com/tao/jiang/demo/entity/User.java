@@ -19,6 +19,7 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private Date createTime;
 
     @JsonIgnore
