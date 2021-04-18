@@ -34,6 +34,9 @@ public class ConfigurationManager {
     @Value("${token.expiration.period}")
     private int tokenExpirationPeriod;
 
+    @Value("${token.salt}")
+    private String tokenSalt;
+
 
     private MongoOperations fmwMongoDB;
     private MongoOperations fmwFileMongoDB;
@@ -101,6 +104,14 @@ public class ConfigurationManager {
 
     public void setTokenExpirationPeriod(int tokenExpirationPeriod) {
         this.tokenExpirationPeriod = tokenExpirationPeriod;
+    }
+
+    public String getTokenSalt() {
+        return tokenSalt;
+    }
+
+    public void setTokenSalt(String tokenSalt) {
+        this.tokenSalt = tokenSalt;
     }
 
     public MongoOperations getFmwMongoDB() {

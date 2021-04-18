@@ -1,6 +1,7 @@
 package com.tao.jiang.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 
@@ -17,6 +18,7 @@ public class Token {
 
     private String ownerName;
 
+//    @JsonFormat(pattern = "yyyy-MM--dd HH:mm:ss")
     private Date createTime;
 
     public String getId() {

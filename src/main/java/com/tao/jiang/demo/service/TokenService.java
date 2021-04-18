@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.tao.jiang.demo.entity.Token;
 import com.tao.jiang.demo.entity.User;
 import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.utils.ConfigurationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,11 @@ public class TokenService {
 
     public Token getToken(User user) {
         Date start = new Date();
-        long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;
-        Date end = new Date(currentTime);
         String tokenString = "";
-
         try {
-            tokenString = JWT.create().withAudience(user.getId()).withIssuedAt(start).withExpiresAt(end)
-                    .sign(Algorithm.HMAC256(user.getPassword()));
+            tokenString = JWT.create().withAudience(user.getId())
+                    .withIssuedAt(start)
+                    .sign(Algorithm.HMAC256(user.getPassword() + ConfigurationManager.getInstance().getTokenSalt()));
         } catch (Exception e) {
 
         }

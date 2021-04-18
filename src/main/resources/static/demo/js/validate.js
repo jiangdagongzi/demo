@@ -94,6 +94,17 @@ function _showValidateError(elem,tips){
     return false;
 }
 
+function validateToken(){
+    var token = localStorage.getItem('token')
+        createTime = localStorage.getItem('tokenCreateTime')
+        now = new Date()
+    if(!token || token == '')
+        return false
+    else{
+        return now.getTime() - createTime < 43000;
+    }
+}
+
 $(function(){
     $('input').focus(function(){
         $(this).siblings('i').hide();
