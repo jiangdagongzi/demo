@@ -7,6 +7,8 @@ import com.tao.jiang.demo.utils.ConfigurationManager;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -16,14 +18,14 @@ public class TokenRefresher extends AbstractDaemonWorker {
 
     @Override
     protected void execute() throws Exception {
-        try{
+        try {
             List<Token> tokens = tokenRepository.findAll();
-            for(Token token : tokens){
-                if(canBeReMoved(token)){
+            for (Token token : tokens) {
+                if (canBeReMoved(token)) {
                     tokenRepository.delete(token);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

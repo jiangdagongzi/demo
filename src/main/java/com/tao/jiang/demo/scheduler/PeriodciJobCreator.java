@@ -39,7 +39,7 @@ public class PeriodciJobCreator implements ApplicationRunner {
     }
 
     private void addDaemonWorker(String line) {
-        String[] fields = line.trim().split("\t");
+        String[] fields = line.trim().split("---");
         if (fields.length <= 2) {
             String daemonWorkerClass = fields[0].trim();
             int interval = Integer.parseInt(fields[1].trim());
