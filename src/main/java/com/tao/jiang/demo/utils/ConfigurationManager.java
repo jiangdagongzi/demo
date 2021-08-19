@@ -1,8 +1,8 @@
 package com.tao.jiang.demo.utils;
 
 import com.mongodb.MongoClient;
-import com.tao.jiang.demo.repository.token.TokenRepository;
-import com.tao.jiang.demo.repository.user.UserRepository;
+import com.tao.jiang.demo.repository.mongoRepository.token.TokenMongoRepository;
+import com.tao.jiang.demo.repository.mongoRepository.user.UserMongoRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ public class ConfigurationManager {
     private static ConfigurationManager instance;
     private Log log = LogFactory.getFactory().getInstance(ConfigurationManager.class);
     @Autowired
-    private UserRepository userRepository;
+    private UserMongoRepository userMongoRepository;
 
     @Autowired
-    private TokenRepository tokenRepository;
+    private TokenMongoRepository tokenMongoRepository;
 
     @Value("${spring.data.mongodb.database}")
     private String databaseName;
@@ -138,11 +138,11 @@ public class ConfigurationManager {
         this.fmwFileMongoDB = fmwFileMongoDB;
     }
 
-    public UserRepository getUserRepository() {
-        return userRepository;
+    public UserMongoRepository getUserMongoRepository() {
+        return userMongoRepository;
     }
 
-    public TokenRepository getTokenRepository() {
-        return tokenRepository;
+    public TokenMongoRepository getTokenMongoRepository() {
+        return tokenMongoRepository;
     }
 }

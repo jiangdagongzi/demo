@@ -2,7 +2,7 @@ package com.tao.jiang.demo.controller;
 
 import com.tao.jiang.demo.entity.Token;
 import com.tao.jiang.demo.entity.User;
-import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.repository.mongoRepository.token.TokenMongoRepository;
 import com.tao.jiang.demo.service.TokenService;
 import com.tao.jiang.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-
 @Controller
 @RequestMapping("/${demo.stage.name}/user")
 public class UserController {
     @Autowired
-    private TokenRepository tokenRepository;
+    private TokenMongoRepository tokenMongoRepository;
 
     @Autowired
     private UserService userService;

@@ -1,31 +1,29 @@
 package com.tao.jiang.demo.service;
 
 import com.tao.jiang.demo.entity.User;
-import com.tao.jiang.demo.repository.user.UserRepository;
+import com.tao.jiang.demo.repository.mongoRepository.user.UserMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserMongoRepository userMongoRepository;
 
     public User findByUsername(String userName) {
-        return userRepository.findByUsername(userName);
+        return userMongoRepository.findByUsername(userName);
     }
 
     public User findUserById(String userId) {
-        return userRepository.findUserById(userId);
+        return userMongoRepository.findUserById(userId);
     }
 
     public User save(User user) {
-        return userRepository.save(user);
+        return userMongoRepository.save(user);
     }
 
     public static boolean userNameValid(String userName) {

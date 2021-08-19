@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.tao.jiang.demo.entity.Token;
 import com.tao.jiang.demo.entity.User;
-import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.repository.mongoRepository.token.TokenMongoRepository;
 import com.tao.jiang.demo.utils.ConfigurationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Date;
 public class TokenService {
 
     @Autowired
-    TokenRepository tokenRepository;
+    TokenMongoRepository tokenMongoRepository;
 
     public Token getToken(User user) {
         Date start = new Date();
@@ -37,6 +37,6 @@ public class TokenService {
     }
 
     public void save(Token token) {
-        tokenRepository.save(token);
+        tokenMongoRepository.save(token);
     }
 }

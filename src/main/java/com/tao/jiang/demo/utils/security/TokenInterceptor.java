@@ -1,7 +1,7 @@
 package com.tao.jiang.demo.utils.security;
 
 import com.tao.jiang.demo.entity.Token;
-import com.tao.jiang.demo.repository.token.TokenRepository;
+import com.tao.jiang.demo.repository.mongoRepository.token.TokenMongoRepository;
 import com.tao.jiang.demo.utils.ConfigurationManager;
 import com.tao.jiang.demo.utils.general.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +22,7 @@ import java.util.Date;
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private TokenRepository tokenRepository;
+    private TokenMongoRepository tokenMongoRepository;
 
     private Log log = LogFactory.getFactory().getInstance(TokenInterceptor.class);
 
@@ -31,7 +31,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         String tokenString = httpServletRequest.getHeader("token");
 //        String tokenString = httpServletRequest.getCookies().
 //        String userName = httpServletRequest.getParameter("userName");
-        Token token = tokenRepository.findByToken(tokenString);
+        Token token = tokenMongoRepository.findByToken(tokenString);
 
 
         PrintWriter writer = null;
