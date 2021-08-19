@@ -47,16 +47,14 @@ public class SQLGenerator {
             Class<?> clz = Class.forName(className);
             className = clz.getSimpleName();
             Field[] fields = clz.getDeclaredFields();
-            StringBuffer column = new StringBuffer();
+            StringBuilder column = new StringBuilder();
             String varchar = " varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,";
             for (Field f : fields) {
-                column.append(" \n `" + f.getName() + "`").append(varchar);
+                column.append(" \n `").append(f.getName()).append("`").append(varchar);
             }
             StringBuffer sql = new StringBuffer();
-            sql.append("\n DROP TABLE IF EXISTS `" + className + "`; ")
-                    .append(" \n CREATE TABLE `" + className + "`  (")
-                    .append(" \n `id` int(11) NOT NULL AUTO_INCREMENT,")
-                    .append(" \n " + column)
+            sql.append("\n DROP TABLE IF EXISTS `").append(className).append("`; ").append(" \n CREATE TABLE `").append(className).append("`  (")
+                    .append(" \n `id` int(11) NOT NULL AUTO_INCREMENT,").append(" \n ").append(column)
                     .append(" \n PRIMARY KEY (`id`) USING BTREE,")
                     .append("\n INDEX `id`(`id`) USING BTREE")
                     .append(" \n ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci;");
