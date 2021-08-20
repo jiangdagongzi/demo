@@ -87,7 +87,7 @@ function login_form_submit() {
         cache: false,
         type: 'post',
         dataType: 'json',
-        url: "/demo/user/login",
+        url:"/fmw/user/login",
         data: {
             userName: $accountl.val(),
             password: $passwordl.val()

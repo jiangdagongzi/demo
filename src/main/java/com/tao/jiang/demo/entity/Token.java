@@ -2,10 +2,12 @@ package com.tao.jiang.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.ibatis.type.Alias;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
+@Alias("Token")
 public class Token {
     @Id
     private String id;

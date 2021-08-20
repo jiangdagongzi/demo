@@ -1,4 +1,4 @@
-package com.tao.jiang.demo.repository.myRepository.user;
+package com.tao.jiang.demo.repository.myRepository.hibernate.user;
 
 import com.tao.jiang.demo.entity.User;
 import org.springframework.data.repository.CrudRepository;

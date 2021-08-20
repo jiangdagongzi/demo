@@ -19,7 +19,7 @@ public class SystemConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenInterceptor).addPathPatterns("/*").
-                excludePathPatterns("/demo/user/login", "/demo/user/register", "/demo/hello", "/*.html","/css/*","/images/*", "/js/*","/img/*");
+                    excludePathPatterns("/fmw/user/login", "/fmw/user/register", "/fmw/hello", "/*.html","/css/*","/images/*", "/js/*","/img/*");
     }
 
     @Bean

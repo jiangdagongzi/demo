@@ -2,11 +2,13 @@ package com.tao.jiang.demo.service;
 
 import com.tao.jiang.demo.entity.User;
 import com.tao.jiang.demo.repository.mongoRepository.user.UserMongoRepository;
+import com.tao.jiang.demo.repository.myRepository.mybatis.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
 import java.security.MessageDigest;
+import java.util.Date;
 
 @Service
 public class UserService {
@@ -14,16 +16,23 @@ public class UserService {
     @Autowired
     private UserMongoRepository userMongoRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public User findByUsername(String userName) {
-        return userMongoRepository.findByUsername(userName);
+        return userMapper.findByUserName(userName);
     }
 
     public User findUserById(String userId) {
-        return userMongoRepository.findUserById(userId);
+        return userMapper.findUserById(userId);
     }
 
-    public User save(User user) {
-        return userMongoRepository.save(user);
+    public void save(User user) {
+        userMapper.save(user);
+    }
+
+    public void updateLastLogin(String userId, Date lastLogin){
+        userMapper.updateLastLogin(userId, lastLogin);
     }
 
     public static boolean userNameValid(String userName) {

@@ -1,4 +1,4 @@
-package com.tao.jiang.demo.repository.myRepository.token;
+package com.tao.jiang.demo.repository.myRepository.hibernate.token;
 
 import com.tao.jiang.demo.entity.Token;
 import org.springframework.data.repository.CrudRepository;

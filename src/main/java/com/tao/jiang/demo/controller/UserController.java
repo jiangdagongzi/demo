@@ -68,8 +68,8 @@ public class UserController {
         } else {
             Token token = tokenService.getToken(user);
             tokenService.save(token);
-            user.setLastLogin(token.getCreateTime());
-            userService.save(user);
+//            user.setLastLogin(token.getCreateTime());
+            userService.updateLastLogin(user.getId(), token.getCreateTime());
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
     }

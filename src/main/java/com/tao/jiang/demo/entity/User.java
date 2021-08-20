@@ -2,10 +2,12 @@ package com.tao.jiang.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.ibatis.type.Alias;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
+@Alias("User")
 public class User {
     @Id
     @JsonIgnore
