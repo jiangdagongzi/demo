@@ -28,56 +28,56 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
-        String tokenString = httpServletRequest.getHeader("token");
-//        String tokenString = httpServletRequest.getCookies().
-//        String userName = httpServletRequest.getParameter("userName");
-        Token token = tokenMongoRepository.findByToken(tokenString);
-
-
-        PrintWriter writer = null;
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("text/html; charset=utf-8");
-
-        try {
-
-            if (StringUtils.isEmpty(tokenString)) {
-                writer = httpServletResponse.getWriter();
-                writer.print("Token missing!");
-                return false;
-            }
-            // token not exist
-            if (token == null) {
-                writer = httpServletResponse.getWriter();
-                writer.print("Token not exist!");
-                return false;
-            }
-            // token exist
-            else {
-                //check if token validate
-                if (TimeUtils.tokenValidate(token.getCreateTime(), new Date(), ConfigurationManager.getInstance().getTokenExpirationPeriod())) {
-                    //check if token belongs to user
-//                    if (token.getOwnerName().equals(userName)) {
-                        return true;
-//                    } else {
-//                        writer = httpServletResponse.getWriter();
-//                        writer.print("Token not belong to this user!");
-//                        return false;
-//                    }
-                }
-                // not validate
-                else {
-                    writer = httpServletResponse.getWriter();
-                    writer.print("Token expired!");
-                    return false;
-                }
-            }
-        } catch (IOException e) {
-            log.error("response error", e);
-        } finally {
-            if (writer != null)
-                writer.close();
-        }
-        return false;
+//        String tokenString = httpServletRequest.getHeader("token");
+////        String tokenString = httpServletRequest.getCookies().
+////        String userName = httpServletRequest.getParameter("userName");
+//        Token token = tokenMongoRepository.findByToken(tokenString);
+//
+//
+//        PrintWriter writer = null;
+//        httpServletResponse.setCharacterEncoding("UTF-8");
+//        httpServletResponse.setContentType("text/html; charset=utf-8");
+//
+//        try {
+//
+//            if (StringUtils.isEmpty(tokenString)) {
+//                writer = httpServletResponse.getWriter();
+//                writer.print("Token missing!");
+//                return false;
+//            }
+//            // token not exist
+//            if (token == null) {
+//                writer = httpServletResponse.getWriter();
+//                writer.print("Token not exist!");
+//                return false;
+//            }
+//            // token exist
+//            else {
+//                //check if token validate
+//                if (TimeUtils.tokenValidate(token.getCreateTime(), new Date(), ConfigurationManager.getInstance().getTokenExpirationPeriod())) {
+//                    //check if token belongs to user
+////                    if (token.getOwnerName().equals(userName)) {
+//                        return true;
+////                    } else {
+////                        writer = httpServletResponse.getWriter();
+////                        writer.print("Token not belong to this user!");
+////                        return false;
+////                    }
+//                }
+//                // not validate
+//                else {
+//                    writer = httpServletResponse.getWriter();
+//                    writer.print("Token expired!");
+//                    return false;
+//                }
+//            }
+//        } catch (IOException e) {
+//            log.error("response error", e);
+//        } finally {
+//            if (writer != null)
+//                writer.close();
+//        }
+        return true;
     }
 
     @Override

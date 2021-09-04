@@ -1,8 +1,8 @@
 $(function() {
 	//check token
-	if(!validateToken()){
-		window.location.href = 'login.html'
-	}
+//	if(!validateToken()){
+//		window.location.href = 'login.html'
+//	}
 	/*index*/
 	$('.module3 .company').hover(function(){
 		$(this).find('.score').stop(true,true).fadeToggle(200);

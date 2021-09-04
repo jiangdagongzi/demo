@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/${demo.stage.name}/user")
 public class UserController {
@@ -33,6 +35,7 @@ public class UserController {
             @RequestParam(value = "password", required = true) String password
     ) {
         User user = userService.findByUsername(userName);
+        Date date = new Date();
         if (user != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exist!");
         } else {
@@ -45,6 +48,7 @@ public class UserController {
                     User newUser = new User();
                     newUser.setUserName(userName);
                     newUser.setPassword(UserService.encryptPassword(password));
+                    newUser.setCreateTime(date);
                     userService.save(newUser);
                     return ResponseEntity.status(HttpStatus.OK).body("User registered!");
                 }
